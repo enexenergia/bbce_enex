@@ -73,7 +73,7 @@ def cria_layout():
                         {'label': '1 S', 'value': '7D'},
                         {'label': '1 M', 'value': '1M'}
                     ],
-                    value='7D'
+                    value='1D'
                 )
 
             ],
