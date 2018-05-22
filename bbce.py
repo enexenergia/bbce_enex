@@ -249,35 +249,36 @@ def update_figure(produto, discretizacao, start_date, end_date, dp, media_movel,
                 window=media,
             ).mean()
 
-        df_filtrado['vol_p'] = df_filtrado['preco_fim'] + dp * \
-                               df_filtrado['preco_fim'].rolling(
-                                   min_periods=1,
-                                   center=False,
-                                   window=media_movel[0]
-                               ).std()
-
-        df_filtrado['vol_n'] = df_filtrado['preco_fim'] - dp * \
-                               df_filtrado['preco_fim'].rolling(
-                                   min_periods=1,
-                                   center=False,
-                                   window=media_movel[0]
-                               ).std()
-
-
-
-        #df_filtrado['vol_p'] = df_filtrado['media_movel_{}'.format(media_movel[0])] + dp * \
+        # Centralizado no ultimo negocio
+        #df_filtrado['vol_p'] = df_filtrado['preco_fim'] + dp * \
         #                       df_filtrado['preco_fim'].rolling(
         #                           min_periods=1,
         #                           center=False,
         #                           window=media_movel[0]
         #                       ).std()
 
-        #df_filtrado['vol_n'] = df_filtrado['media_movel_{}'.format(media_movel[0])] - dp * \
+        #df_filtrado['vol_n'] = df_filtrado['preco_fim'] - dp * \
         #                       df_filtrado['preco_fim'].rolling(
         #                           min_periods=1,
         #                           center=False,
         #                           window=media_movel[0]
         #                       ).std()
+
+
+        # Centralizado na media movel
+        df_filtrado['vol_p'] = df_filtrado['media_movel_{}'.format(media_movel[0])] + dp * \
+                               df_filtrado['preco_fim'].rolling(
+                                   min_periods=1,
+                                   center=False,
+                                   window=media_movel[0]
+                               ).std()
+
+        df_filtrado['vol_n'] = df_filtrado['media_movel_{}'.format(media_movel[0])] - dp * \
+                               df_filtrado['preco_fim'].rolling(
+                                   min_periods=1,
+                                   center=False,
+                                   window=media_movel[0]
+                               ).std()
 
     elif visao == 'medio':
         # criacao da MM e bollinger bands
